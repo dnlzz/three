@@ -1,6 +1,3 @@
-# three
-# plus
-# three
-# is 4
+3+4+4=11
 
 added this line
