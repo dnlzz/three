@@ -42,7 +42,8 @@ struct clip *build_a_lst(char *fn) {
    {
       while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
       {
-        split_line(line);
+        split_line(fields, line);
+
       }
       fclose ( fp );
    }
@@ -51,9 +52,9 @@ struct clip *build_a_lst(char *fn) {
       //error
    }
 
-  // open fn
-  // while no more lines
-  // read a line
+  // open fn -OK
+  // while no more lines- OK
+  // read a line- OK
   // split the line into four substrings/int and store them in a struct
   // append - add the struct at the end of the list
   // return the head pointer holding the list
@@ -67,7 +68,13 @@ void split_line(char **fields,char *line) {
   char *token, *delim;
   delim = ",\n";
 
+  token=strtok(line, ",");
+  printf("%s", token);
   
+  while (token != NULL) {
+    token=strtok(NULL, delim);
+    printf("%s", token);    
+  }
 
   /* 
      call strtok(line, delim);
