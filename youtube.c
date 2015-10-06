@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define LINE_LENGTH 100
+#define LINE_LENGTH 256
 
 struct clip *build_a_lst();
 struct clip *append();
@@ -69,13 +69,15 @@ void split_line(char **fields,char *line) {
   delim = ",\n";
 
   token=strtok(line, ",");
-  printf("%s", token);
+  printf("%s  ", token);
   
   while (token != NULL) {
     token=strtok(NULL, delim);
-    printf("%s", token);    
+    printf("%s  ", token);    
   }
 
+  printf("\n");
+  
   /* 
      call strtok(line, delim);
      repeat until strtok returns NULL using strtok(NULL, delim);
