@@ -42,8 +42,7 @@ struct clip *build_a_lst(char *fn) {
    {
       while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
       {
-         //strtok line
-        fputs ( line, stdout );
+        split_line(line);
       }
       fclose ( fp );
    }
@@ -67,6 +66,9 @@ void split_line(char **fields,char *line) {
   int i=0;
   char *token, *delim;
   delim = ",\n";
+
+  
+
   /* 
      call strtok(line, delim);
      repeat until strtok returns NULL using strtok(NULL, delim);
