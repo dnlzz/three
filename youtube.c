@@ -43,7 +43,14 @@ struct clip *build_a_lst(char *fn) {
       while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
       {
         split_line(fields, line);
+	append(head, line);
+	cnt++;
+	//testerr
+	/* for (int i=0; i < 4; i++) { */
+	/*   printf("%s", *fields[i]); */
 
+	/* } */
+	//end tester
       }
       fclose ( fp );
    }
@@ -69,13 +76,17 @@ void split_line(char **fields,char *line) {
   delim = ",\n";
 
   token=strtok(line, ",");
-  printf("%s  ", token);
+  fields[i]=token;
+  i++;
   
   while (token != NULL) {
     token=strtok(NULL, delim);
+    fields[i]=token;
     printf("%s  ", token);    
+    i++;
   }
 
+  i=0;
   printf("\n");
   
   /* 
@@ -88,6 +99,14 @@ void split_line(char **fields,char *line) {
 struct clip *append(struct clip *hp,char **five) {
   struct clip *cp,*tp;
 
+  tp = malloc(sizeof(struct clip));
+
+  while(cp->next != NULL) {
+    cp = cp->next;
+  }
+
+  cp->next = tp;
+  
   /* 
      malloc tp
      set views using atoi(*five)
@@ -101,6 +120,12 @@ struct clip *append(struct clip *hp,char **five) {
 }
 
 void print_lst(struct clip *cp) {
+
+  cp = head;
+  while (cp) {
+    printf("%d,%s,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title);
+  }
+  
   /* 
      use a while loop and the statement below to print the list
      printf("%d,%s,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title,cp->time);
