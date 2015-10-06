@@ -21,9 +21,11 @@ struct clip {
 int main(int argc, char **argv) {
   int n;
   head = build_a_lst(*(argv+1));
-  n = find_length(head);
-  printf("%d clips\n",n);
-  print_lst(head);		/* prints the table */
+  
+  //n = find_length(head);
+  //printf("%d clips\n",n);
+  //print_lst(head);    /* prints the table */ 
+  
   return 0;
 }
 
@@ -34,6 +36,21 @@ struct clip *build_a_lst(char *fn) {
   char line[LINE_LENGTH];
   int cnt=0;
   hp=NULL;
+
+  fp = fopen ( fn, "r" );
+   if ( fp != NULL )
+   {
+      while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
+      {
+         //strtok line
+        fputs ( line, stdout );
+      }
+      fclose ( fp );
+   }
+   else
+   {
+      //error
+   }
 
   // open fn
   // while no more lines
