@@ -44,7 +44,7 @@ struct clip *build_a_lst(char *fn) {
       {
         split_line(fields, line);
         //potentially go through fields array and replace "COMMA" with ","
-        append(head, fields);
+        append(head, fields); //or hp =    cp =??
         //cnt++;
 	/*/testerr
         int i;
