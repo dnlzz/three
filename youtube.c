@@ -37,20 +37,31 @@ struct clip *build_a_lst(char *fn) {
   int cnt=0;
   hp=NULL;
 
+  hp=malloc(sizeof(struct clip));
+  hp->views=0;
+  hp->user="John";
+  hp->id="ID";
+  hp->title="title";
+  head=hp;
+  
   fp = fopen ( fn, "r" );
    if ( fp != NULL )
    {
-      while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
+     while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
       {
         split_line(fields, line);
-        //potentially go through fields array and replace "COMMA" with ","
-        //append(head, fields); //or hp =    cp =??
+	//potentially go through fields array and replace "COMMA" with ","
+	//fields contains 4 fields, now pass to append make them into a struct
+	//and add to list.
+	append(hp, fields); //or hp =    cp =??
         //cnt++;
 	/*/testerr
 	for (int i=0; i < 4; i++) { //less than tok 'cnt'
 	   printf("field at index %d : %s", i, fields[i]); 
 	 }
 	//end tester */
+
+	//append();
       }
       fclose ( fp );
    }
@@ -79,20 +90,18 @@ void split_line(char **fields,char *line) {
 
   token=strtok(line, ",");
   fields[i]=token;
-  printf("%d : %s\n", i, token); 
+  // printf("%d : %s\n", i, token); 
   i++;
 
   token=strtok(NULL, delim);
   
   while (token != NULL) {
     fields[i]=token;
-    printf("%d : %s\n", i, token); 
+    // printf("%d : %s\n", i, token); 
     i++;
     token=strtok(NULL, delim);
   }
 
-  printf("\nEND OF SPLIT");
-  
   /* 
      call strtok(line, delim);
      repeat until strtok returns NULL using strtok(NULL, delim);
@@ -101,21 +110,26 @@ void split_line(char **fields,char *line) {
 
 /* set four values into a clip, insert a clip at the of the list */
 struct clip *append(struct clip *hp,char **five) {
-  struct clip *cp,*tp;  //temp ptr?
+  struct clip *cp, *tp;  //temp ptr?
 
+  //printf("ENTERED APPEND@!");
+  
   tp = malloc(sizeof(struct clip));
+  
   int iViews = atoi(*five);
 
+  
   tp->views = iViews;
   tp->user = *(five + 1);
   tp->id = *(five + 2);
   tp->title = *(five + 3);
-
-  printf("cp %x, hp %x", cp, hp);
+  
+  
+  printf("cp %x, hp %x\n", cp, hp);
 
   cp = hp;
 
-  printf("cp %x, hp %x", cp, hp);
+  printf("cp %x, hp %x\n\n", cp, hp);
 
   while(cp->next != NULL) {
     cp = cp->next;
