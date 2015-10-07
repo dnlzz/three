@@ -44,11 +44,10 @@ struct clip *build_a_lst(char *fn) {
       {
         split_line(fields, line);
         //potentially go through fields array and replace "COMMA" with ","
-        append(head, fields); //or hp =    cp =??
+        //append(head, fields); //or hp =    cp =??
         //cnt++;
 	/*/testerr
-        int i;
-	for (i=0; i < 4; i++) { //less than tok 'cnt'
+	for (int i=0; i < 4; i++) { //less than tok 'cnt'
 	   printf("field at index %d : %s", i, fields[i]); 
 	 }
 	//end tester */
@@ -60,6 +59,8 @@ struct clip *build_a_lst(char *fn) {
       //error
    }
 
+   hp = head;
+   
   // open fn -OK
   // while no more lines- OK
   // read a line- OK
@@ -78,17 +79,19 @@ void split_line(char **fields,char *line) {
 
   token=strtok(line, ",");
   fields[i]=token;
+  printf("%d : %s\n", i, token); 
   i++;
+
+  token=strtok(NULL, delim);
   
   while (token != NULL) {
-    token=strtok(NULL, delim);
     fields[i]=token;
-    //printf("%s  ", token);    
+    printf("%d : %s\n", i, token); 
     i++;
+    token=strtok(NULL, delim);
   }
 
-  i=0;
-  printf("\n");
+  printf("\nEND OF SPLIT");
   
   /* 
      call strtok(line, delim);
@@ -144,5 +147,10 @@ void print_lst(struct clip *cp) {
      printf("%d,%s,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title,cp->time);
   */
 }
+
+int find_length() {
+
+}
+
 
 /* end */
