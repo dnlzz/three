@@ -98,9 +98,21 @@ void split_line(char **fields,char *line) {
 
 /* set four values into a clip, insert a clip at the of the list */
 struct clip *append(struct clip *hp,char **five) {
-  struct clip *cp,*tp;  //tok ptr
+  struct clip *cp,*tp;  //temp ptr?
 
   tp = malloc(sizeof(struct clip));
+  int iViews = atoi(*five);
+
+  tp->views = iViews;
+  tp->user = *(five + 1);
+  tp->id = *(five + 2);
+  tp->title = *(five + 3);
+
+  printf("cp %x, hp %x", cp, hp);
+
+  cp = hp;
+
+  printf("cp %x, hp %x", cp, hp);
 
   while(cp->next != NULL) {
     cp = cp->next;
@@ -109,12 +121,12 @@ struct clip *append(struct clip *hp,char **five) {
   cp->next = tp;
   
   /* 
-     malloc tp
-     set views using atoi(*five)
+     malloc tp - OK
+     set views using atoi(*five) - OK
      malloc for four strings.
      strcpy four strings to tp
-     insert tp at the end of the list pointed by hp
-     use cp to traverse the list
+     insert tp at the end of the list pointed by hp - OK
+     use cp to traverse the list - OK
  */
 
   return hp;
