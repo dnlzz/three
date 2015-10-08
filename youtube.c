@@ -37,9 +37,9 @@ struct clip *build_a_lst(char *fn) {
   int cnt=0;
   hp=NULL;
 
-  hp=malloc(sizeof(struct clip));
+  // hp=malloc(sizeof(struct clip));
 
-  hp=head;
+  // hp=head;
   
   fp = fopen ( fn, "r" );
    if ( fp != NULL )
@@ -50,7 +50,7 @@ struct clip *build_a_lst(char *fn) {
 	//potentially go through fields array and replace "COMMA" with ","
 	//fields contains 4 fields, now pass to append make them into a struct
 	//and add to list.
-	append(&hp, fields); //or hp =    cp =??
+	append(hp, fields); //or hp =    cp =??
         //cnt++;
 	/*/testerr
 	for (int i=0; i < 4; i++) { //less than tok 'cnt'
@@ -67,7 +67,7 @@ struct clip *build_a_lst(char *fn) {
       //error
    }
 
-   hp = head;
+   // hp = head;
    
   // open fn -OK
   // while no more lines- OK
@@ -108,7 +108,7 @@ void split_line(char **fields,char *line) {
 /* set four values into a clip, insert a clip at the of the list */
 struct clip *append(struct clip *hp,char **five) {
   struct clip *cp, *tp;  //temp ptr?
-
+  
   tp = malloc(sizeof(struct clip));
   int iViews = atoi(*five);
 
@@ -118,21 +118,16 @@ struct clip *append(struct clip *hp,char **five) {
   tp->title = *(five + 3);
   tp->next = NULL;
 
+  printf("%d,%s,%s,%s,%x\n",tp->views,tp->user,tp->id,tp->title, tp->next);
   cp = hp;
-
-  if (find_length(hp) == 0) {
-    hp = tp;
-  } else {
   
     while(cp->next != NULL) {
+      printf("WHILE?");
       cp = cp->next;
     }
     
-    
     cp->next = tp;
     
-    free(tp);
-  }
   /* 
      malloc tp - OK
      set views using atoi(*five) - OK
@@ -141,7 +136,8 @@ struct clip *append(struct clip *hp,char **five) {
      insert tp at the end of the list pointed by hp - OK
      use cp to traverse the list - OK
  */
-
+  free(tp);
+  
   return hp;
 }
 
