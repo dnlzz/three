@@ -22,8 +22,8 @@ int main(int argc, char **argv) {
   int n;
   head = build_a_lst(*(argv+1));
   
-  //n = find_length(head);  
-  //printf("%d clips\n",n); //69 clips
+  n = find_length(head);  
+  printf("%d clips\n",n); //69 clips
   //print_lst(head);    /* prints the table */ 
   
   return 0;
@@ -38,11 +38,8 @@ struct clip *build_a_lst(char *fn) {
   hp=NULL;
 
   hp=malloc(sizeof(struct clip));
-  hp->views=0;
-  hp->user="John";
-  hp->id="ID";
-  hp->title="title";
-  head=hp;
+
+  hp=head;
   
   fp = fopen ( fn, "r" );
    if ( fp != NULL )
@@ -53,7 +50,7 @@ struct clip *build_a_lst(char *fn) {
 	//potentially go through fields array and replace "COMMA" with ","
 	//fields contains 4 fields, now pass to append make them into a struct
 	//and add to list.
-	append(hp, fields); //or hp =    cp =??
+	append(&hp, fields); //or hp =    cp =??
         //cnt++;
 	/*/testerr
 	for (int i=0; i < 4; i++) { //less than tok 'cnt'
@@ -112,31 +109,30 @@ void split_line(char **fields,char *line) {
 struct clip *append(struct clip *hp,char **five) {
   struct clip *cp, *tp;  //temp ptr?
 
-  //printf("ENTERED APPEND@!");
-  
   tp = malloc(sizeof(struct clip));
-  
   int iViews = atoi(*five);
 
-  
   tp->views = iViews;
   tp->user = *(five + 1);
   tp->id = *(five + 2);
   tp->title = *(five + 3);
-  
-  
-  printf("cp %x, hp %x\n", cp, hp);
+  tp->next = NULL;
 
   cp = hp;
 
-  printf("cp %x, hp %x\n\n", cp, hp);
-
-  while(cp->next != NULL) {
-    cp = cp->next;
-  }
-
-  cp->next = tp;
+  if (find_length(hp) == 0) {
+    hp = tp;
+  } else {
   
+    while(cp->next != NULL) {
+      cp = cp->next;
+    }
+    
+    
+    cp->next = tp;
+    
+    free(tp);
+  }
   /* 
      malloc tp - OK
      set views using atoi(*five) - OK
@@ -154,6 +150,7 @@ void print_lst(struct clip *cp) {
   cp = head;
   while (cp) {
     printf("%d,%s,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title);
+    cp = cp->next;
   }
   
   /* 
@@ -162,8 +159,20 @@ void print_lst(struct clip *cp) {
   */
 }
 
-int find_length() {
+int find_length(struct clip *hp) {
+  int count = 0;
 
+  struct clip *cp;
+
+  cp = hp;
+
+  while (cp) {
+    count++;
+    printf("%x", cp);
+    cp=cp->next;
+  }
+
+  return count;
 }
 
 
