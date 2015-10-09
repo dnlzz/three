@@ -43,11 +43,8 @@ struct clip *build_a_lst(char *fn) {
      while ( fgets ( line, sizeof(line), fp ) != NULL ) /* read a line */
       {
         split_line(fields, line);
-	//potentially go through fields array and replace "COMMA" with ","
-	//fields contains 4 fields, now pass to append make them into a struct
-	//and add to list.
-	head = append(hp, fields);
-	hp = head;
+	       head = append(hp, fields);
+	       hp = head;
         //cnt++;
 	/*/testerr
 	for (int i=0; i < 4; i++) { //less than tok 'cnt'
@@ -89,7 +86,6 @@ void split_line(char **fields,char *line) {
   
   while (token != NULL) {
     fields[i]=token;
-    //printf("%d : %s\n", i, token); 
     i++;
     token=strtok(NULL, delim);
   }
@@ -106,17 +102,21 @@ struct clip *append(struct clip *hp,char **five) {
   
   tp = malloc(sizeof(struct clip));
   int iViews = atoi(*five);
-  char *users = *(five+1);
-  char *id = *(five+2);
-  char *title = *(five+3);
+  char *users = malloc(sizeof(*(five+1)));
+  char *id2 = malloc(sizeof(*(five+2)));
+  char *title2 = malloc(sizeof(*(five+3)));
 
-  //printf("%s, %s, %s", users, id, title);
+  strcpy(users, *(five+1));
+  strcpy(id2, *(five+2));
+  //strcpy(title2, five[3]);
+
+  printf("%s\n", five[3]);
   
-  tp->views = iViews;
-  tp->user = users;
-  tp->id = id;
-  tp->title = title;
-  tp->next = NULL;    
+  tp->views = iViews; //OK
+  tp->user = users;   //OK
+  tp->id = id2;       //OK
+  tp->title = "title2";
+  tp->next = NULL;   
   
   if (hp == NULL) {
     head = hp = tp;
@@ -129,35 +129,12 @@ struct clip *append(struct clip *hp,char **five) {
     
     cp->next = tp;
   }
-  
-  //  printf("tp: %x,  &tp: %x,  *tp: %x\n", tp, &tp, *tp);
-  // printf("hp: %x,  &hp: %x,  *hp: %x\n\n", hp, &hp, *hp);
-  
-  /*
-  tp = malloc(sizeof(struct clip));
-  int iViews = atoi(*five);
-
-  tp->views = iViews;
-  tp->user = *(five + 1);
-  tp->id = *(five + 2);
-  tp->title = *(five + 3);
-  tp->next = NULL;
-
-  printf("%d,%s,%s,%s,%x\n",tp->views,tp->user,tp->id,tp->title, tp->next);
-  cp = hp;
-  
-    while(cp->next != NULL) {
-      printf("WHILE?");
-      cp = cp->next;
-    }
-    
-    cp->next = tp;
     
   /* 
      malloc tp - OK
      set views using atoi(*five) - OK
-     malloc for four strings.
-     strcpy four strings to tp
+     malloc for four strings. - OK
+     strcpy four strings to tp - ???
      insert tp at the end of the list pointed by hp - OK
      use cp to traverse the list - OK
   */
