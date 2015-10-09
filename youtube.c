@@ -45,14 +45,6 @@ struct clip *build_a_lst(char *fn) {
         split_line(fields, line);
 	       head = append(hp, fields);
 	       hp = head;
-        //cnt++;
-	/*/testerr
-	for (int i=0; i < 4; i++) { //less than tok 'cnt'
-	   printf("field at index %d : %s", i, fields[i]); 
-	 }
-	//end tester */
-
-	//append();
       }
       fclose ( fp );
    }
@@ -61,13 +53,6 @@ struct clip *build_a_lst(char *fn) {
       //error
    }
    
-  // open fn -OK
-  // while no more lines- OK
-  // read a line- OK
-  // split the line into four substrings/int and store them in a struct
-  // append - add the struct at the end of the list
-  // return the head pointer holding the list
-
   return hp;
 }
 
@@ -79,7 +64,6 @@ void split_line(char **fields,char *line) {
 
   token=strtok(line, ",");
   fields[i]=token;
-  // printf("%d : %s\n", i, token); 
   i++;
 
   token=strtok(NULL, delim);
@@ -90,10 +74,6 @@ void split_line(char **fields,char *line) {
     token=strtok(NULL, delim);
   }
 
-  /* 
-     call strtok(line, delim);
-     repeat until strtok returns NULL using strtok(NULL, delim);
- */
 }
 
 /* set four values into a clip, insert a clip at the of the list */
@@ -104,16 +84,16 @@ struct clip *append(struct clip *hp,char **five) {
   int iViews = atoi(*five);
   char *users = malloc(sizeof(*(five+1)));
   char *id2 = malloc(sizeof(*(five+2)));
-  char *title2 = malloc(sizeof(*(five+3)));
+  char *title2 = malloc(strlen( *(five+3) ) + 1 );
 
   strcpy(users, *(five+1));
   strcpy(id2, *(five+2));
-  strcpy(title2, five[3]);
+  strcpy(title2, *(five+3));
   
-  tp->views = iViews; //OK
-  tp->user = users;   //OK
-  tp->id = id2;       //OK
-  tp->title = "title2";
+  tp->views = iViews; 
+  tp->user = users;   
+  tp->id = id2;       
+  tp->title = title2;
   tp->next = NULL;   
   
   if (hp == NULL) {
@@ -128,15 +108,6 @@ struct clip *append(struct clip *hp,char **five) {
     cp->next = tp;
   }
     
-  /* 
-     malloc tp - OK
-     set views using atoi(*five) - OK
-     malloc for four strings. - OK
-     strcpy four strings to tp - ???
-     insert tp at the end of the list pointed by hp - OK
-     use cp to traverse the list - OK
-  */
-    
   return hp;
 }
 
@@ -148,11 +119,7 @@ void print_lst(struct clip *hp) {
     printf("%d  %s  %s  %s\n", cp->views, cp->user, cp->id, cp->title);
     cp = cp->next;
   }
-  
-  /* 
-     use a while loop and the statement below to print the list
-     printf("%d,%s,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title,cp->time);
-  */
+
 }
 
 int find_length(struct clip *hp) {
@@ -169,6 +136,5 @@ int find_length(struct clip *hp) {
 
   return count;
 }
-
 
 /* end */
