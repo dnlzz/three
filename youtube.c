@@ -108,9 +108,7 @@ struct clip *append(struct clip *hp,char **five) {
 
   strcpy(users, *(five+1));
   strcpy(id2, *(five+2));
-  //strcpy(title2, five[3]);
-
-  printf("%s\n", five[3]);
+  strcpy(title2, five[3]);
   
   tp->views = iViews; //OK
   tp->user = users;   //OK
