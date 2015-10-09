@@ -36,10 +36,6 @@ struct clip *build_a_lst(char *fn) {
   char line[LINE_LENGTH];
   int cnt=0;
   hp=NULL;
-
-  // hp=malloc(sizeof(struct clip));
-
-  // hp=head;
   
   fp = fopen ( fn, "r" );
    if ( fp != NULL )
@@ -50,7 +46,7 @@ struct clip *build_a_lst(char *fn) {
 	//potentially go through fields array and replace "COMMA" with ","
 	//fields contains 4 fields, now pass to append make them into a struct
 	//and add to list.
-	head = append(hp, fields); //or hp =    cp =??
+	head = append(hp, fields);
 	hp = head;
         //cnt++;
 	/*/testerr
@@ -67,8 +63,6 @@ struct clip *build_a_lst(char *fn) {
    {
       //error
    }
-
-   // hp = head;
    
   // open fn -OK
   // while no more lines- OK
@@ -109,23 +103,25 @@ void split_line(char **fields,char *line) {
 /* set four values into a clip, insert a clip at the of the list */
 struct clip *append(struct clip *hp,char **five) {
   struct clip *cp, *tp;  //temp ptr?
-
-  
-  
-  //printf("hp: %x,  &hp: %x\n", hp, &hp);
   
   tp = malloc(sizeof(struct clip));
   int iViews = atoi(*five);
+  char *users = *(five+1);
+  char *id = *(five+2);
+  char *title = *(five+3);
+
+  //printf("%s, %s, %s", users, id, title);
+  
+  tp->views = iViews;
+  tp->user = users;
+  tp->id = id;
+  tp->title = title;
+  tp->next = NULL;    
   
   if (hp == NULL) {
-    tp->views = iViews;
-    tp->user = *(five + 1);
-    tp->id = *(five + 2);
-    tp->title = *(five + 3);
-    tp->next = NULL;    
-    hp = tp;
+    head = hp = tp;
   } else {
-     cp = hp;
+    cp = hp;
   
     while(cp->next != NULL) {
       cp = cp->next;
@@ -164,9 +160,7 @@ struct clip *append(struct clip *hp,char **five) {
      strcpy four strings to tp
      insert tp at the end of the list pointed by hp - OK
      use cp to traverse the list - OK
- */
-  
-  //  free(tp);
+  */
     
   return hp;
 }
@@ -176,7 +170,7 @@ void print_lst(struct clip *hp) {
   
   cp = hp;
   while (cp) {
-    printf("%d,%s,%s,%s\n",cp->views,cp->user,cp->id,cp->title);
+    printf("%d  %s  %s  %s\n", cp->views, cp->user, cp->id, cp->title);
     cp = cp->next;
   }
   
